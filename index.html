@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tile Map Viewer</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="title">Map Viewer</div>
+      <div class="hint">Drag to pan. Wheel to zoom. Hover to lift. Click to select or place.</div>
+    </header>
+
+    <main class="main">
+      <canvas id="webglCanvas"></canvas>
+      <canvas id="canvas"></canvas>
+
+      <div class="turn-panel" id="turnPanel">
+        <div class="turn-title">Turn</div>
+
+        <div class="turn-row">
+          <span class="turn-label">Game turn</span>
+          <span id="turnCountLabel" class="turn-value">1</span>
+        </div>
+
+        <div class="turn-row">
+          <span class="turn-label">Current player</span>
+          <span id="turnPlayerLabel" class="turn-value">Player 1</span>
+        </div>
+
+        <div id="playerList" class="player-list"></div>
+
+        <div class="divider"></div>
+
+        <div class="hud-section-title">Reference</div>
+        <div class="hud-row">
+          <button id="toggleCostsBtn" class="btn">Resource costs</button>
+        </div>
+        <div class="hud-row">
+          <button id="toggleTradesBtn" class="btn">Bank trades</button>
+        </div>
+        <div class="hud-row">
+          <button id="toggleGuideBtn" class="btn">Structure guide</button>
+        </div>
+      </div>
+
+      <div class="endturn-wrap">
+        <button id="endTurnBtn" class="btn endturn-btn">End turn</button>
+      </div>
+      <div class="hud structures-hud" id="structuresHud">
+        <div class="hud-section-title">Structures</div>
+
+        <div class="structure-section">
+          <div class="structure-section-header">
+            <span class="cost-section-title">Transportation</span>
+            <span class="cost-section-toggle"></span>
+          </div>
+          <div class="structure-section-body">
+            <button id="structureRoadBtn" class="btn structure-btn" title="Road (3 tiles)">
+              <span class="structure-left">
+                <img class="structure-icon" src="./Structures/Roads/road_h.png" alt="Road" />
+                <span class="structure-name">Road</span>
+              </span>
+              <span class="structure-cost-btn" data-structure="ROAD" title="Show cost">Costs</span>
+            </button>
+
+            <button id="structureShipBtn" class="btn structure-btn" title="Ship (radius 1, water only)">
+              <span class="structure-left">
+                <img class="structure-icon" src="./Structures/Ships/ship_0.png" alt="Ship" />
+                <span class="structure-name">Ship</span>
+              </span>
+              <span class="structure-cost-btn" data-structure="SHIP" title="Show cost">Costs</span>
+            </button>
+
+            <button id="structurePortBtn" class="btn structure-btn" title="Port (radius 1, next to Water)">
+              <span class="structure-left">
+                <img class="structure-icon" src="./Structures/Settlements/port_0.png" alt="Port" />
+                <span class="structure-name">Port</span>
+              </span>
+              <span class="structure-cost-btn" data-structure="PORT" title="Show cost">Costs</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="structure-section">
+          <div class="structure-section-header">
+            <span class="cost-section-title">Production</span>
+            <span class="cost-section-toggle"></span>
+          </div>
+          <div class="structure-section-body">
+            <button id="structureOutpostBtn" class="btn structure-btn" title="Outpost (radius 1)">
+              <span class="structure-left">
+                <img class="structure-icon" src="./Structures/Settlements/outpost_0.png" alt="Outpost" />
+                <span class="structure-name">Outpost</span>
+              </span>
+              <span class="structure-cost-btn" data-structure="OUTPOST" title="Show cost">Costs</span>
+            </button>
+
+            <button id="structureFarmBtn" class="btn structure-btn" title="Farm (radius 1)">
+              <span class="structure-left">
+                <img class="structure-icon" src="./Structures/Settlements/farm_0.png" alt="Farm" />
+                <span class="structure-name">Farm</span>
+              </span>
+              <span class="structure-cost-btn" data-structure="FARM" title="Show cost">Costs</span>
+            </button>
+
+            <button id="structureTradeTownBtn" class="btn structure-btn" title="Trade Town (radius 1, next to Water)">
+              <span class="structure-left">
+                <img class="structure-icon" src="./Structures/Settlements/trade_town_0.png" alt="Trade Town" />
+                <span class="structure-name">Trade Town</span>
+              </span>
+              <span class="structure-cost-btn" data-structure="TRADE TOWN" title="Show cost">Costs</span>
+            </button>
+
+            <button id="structureFactoryBtn" class="btn structure-btn" title="Factory (radius 1, on Snow)">
+              <span class="structure-left">
+                <img class="structure-icon" src="./Structures/Settlements/factory_0.png" alt="Factory" />
+                <span class="structure-name">Factory</span>
+              </span>
+              <span class="structure-cost-btn" data-structure="FACTORY" title="Show cost">Costs</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="structure-section">
+          <div class="structure-section-header">
+            <span class="cost-section-title">Strategy</span>
+            <span class="cost-section-toggle"></span>
+          </div>
+          <div class="structure-section-body">
+            <button id="structureWallBtn" class="btn structure-btn" title="Wall (3 tiles)">
+              <span class="structure-left">
+                <img class="structure-icon" src="./Structures/Walls/wall_h.png" alt="Wall" />
+                <span class="structure-name">Wall</span>
+              </span>
+              <span class="structure-cost-btn" data-structure="WALL" title="Show cost">Costs</span>
+            </button>
+
+            <button id="structureMercenaryCampBtn" class="btn structure-btn"
+              title="Mercenary Camp (radius 1, on Desert)">
+              <span class="structure-left">
+                <img class="structure-icon" src="./Structures/Settlements/mercenary_camp_0.png" alt="Mercenary Camp" />
+                <span class="structure-name">Merc Camp</span>
+              </span>
+              <span class="structure-cost-btn" data-structure="MERCENARY CAMP" title="Show cost">Costs</span>
+            </button>
+
+            <button id="structureCastleBtn" class="btn structure-btn" title="Castle (radius 1, +1 VP, exclusion zone)">
+              <span class="structure-left">
+                <img class="structure-icon" src="./Structures/Settlements/castle_0.png" alt="Castle" />
+                <span class="structure-name">Castle</span>
+              </span>
+              <span class="structure-cost-btn" data-structure="CASTLE" title="Show cost">Costs</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="structure-section">
+          <div class="structure-section-header">
+            <span class="cost-section-title">Tools</span>
+            <span class="cost-section-toggle"></span>
+          </div>
+          <div class="structure-section-body">
+            <button id="structureBanditTentBtn" class="btn structure-btn" title="Bandit Tent (radius 0)">
+              <span class="structure-left">
+                <img class="structure-icon" src="./Structures/Units/bandit_tent.png" alt="Bandit Tent" />
+                <span class="structure-name">Bandit Tent</span>
+              </span>
+            </button>
+
+            <button id="structureDeleteBtn" class="btn structure-btn" title="Delete structure">
+              <span class="structure-left">
+                <img class="structure-icon" src="./Structures/delete.png" alt="Delete" />
+                <span class="structure-name">Delete</span>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="hud-section-title">Numbers</div>
+        <div class="hud-row">
+          <span class="label">Tile numbers</span>
+          <label class="switch">
+            <input id="toggleNumbers" type="checkbox" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="hud-section-title">Game</div>
+        <div class="hud-row">
+          <span class="label">Players</span>
+          <div class="player-counter">
+            <button id="playersMinus" class="btn btn-small btn-counter" title="Fewer players">-</button>
+            <span id="playersCount" class="counter-value">4</span>
+            <button id="playersPlus" class="btn btn-small btn-counter" title="More players">+</button>
+          </div>
+        </div>
+
+        <div class="hud-row">
+          <button id="clearSelBtn" class="btn">Clear selection</button>
+        </div>
+
+        <div class="hud-row">
+          <button id="resetBtn" class="btn">Reset view</button>
+        </div>
+      </div>
+
+      <div id="costsMenu" class="costs-menu" style="display: none;">
+        <div class="costs-menu-header">
+          <div class="costs-menu-title">Building Costs</div>
+          <button id="closeCostsBtn" class="costs-close-btn">&times;</button>
+        </div>
+        <div id="costsList" class="costs-list">
+          <!-- Costs will be populated by JS -->
+        </div>
+      </div>
+
+      <!-- Bank Trades Panel -->
+      <div id="tradesMenu" class="ref-panel" style="display: none;">
+        <div class="costs-menu-header">
+          <div class="costs-menu-title">Bank Trades</div>
+          <button id="closeTradesBtn" class="costs-close-btn">&times;</button>
+        </div>
+        <div class="ref-panel-body">
+          <div class="ref-block">
+            <div class="ref-block-title">Resources</div>
+            <div class="ref-row">
+              <span class="ref-label">Standard</span>
+              <span class="ref-value">Timber, Clay, Grain, Sheep, Ore</span>
+            </div>
+            <div class="ref-row">
+              <span class="ref-label">Luxury</span>
+              <span class="ref-value">Spices, Herbs, Furs</span>
+            </div>
+          </div>
+          <div class="ref-block">
+            <div class="ref-block-title">Trade Ratios</div>
+            <div class="ref-row">
+              <span class="ref-label">Standard &rarr; Standard</span>
+              <span class="ref-value ref-ratio">4 : 1</span>
+            </div>
+            <div class="ref-row">
+              <span class="ref-label">Luxury &rarr; Any</span>
+              <span class="ref-value ref-ratio">3 : 1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Structure Guide Panel -->
+      <div id="guideMenu" class="ref-panel ref-panel-wide" style="display: none;">
+        <div class="costs-menu-header">
+          <div class="costs-menu-title">Structure Guide</div>
+          <button id="closeGuideBtn" class="costs-close-btn">&times;</button>
+        </div>
+        <div class="ref-panel-body">
+
+          <div class="ref-section">
+            <div class="ref-section-header">
+              <span class="cost-section-title">Transportation</span>
+              <span class="cost-section-toggle"></span>
+            </div>
+            <div class="ref-section-body">
+              <div class="ref-entry">
+                <div class="ref-entry-name">Road</div>
+                <div class="ref-entry-desc">Roads can be placed on 60&deg; angles and must be connected to structures or
+                  other roads.</div>
+              </div>
+              <div class="ref-entry">
+                <div class="ref-entry-name">Ship</div>
+                <div class="ref-entry-desc">Ships must be placed on water with an adjacent road, settlement, or other
+                  player owned structure. Ships can move up to 6 tiles each turn.</div>
+              </div>
+              <div class="ref-entry">
+                <div class="ref-entry-name">Port</div>
+                <div class="ref-entry-desc">Ports must be placed adjacent to water and a ship. Roads can be built off of
+                  ports.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ref-section">
+            <div class="ref-section-header">
+              <span class="cost-section-title">Production</span>
+              <span class="cost-section-toggle"></span>
+            </div>
+            <div class="ref-section-body">
+              <p class="ref-note">Must be placed on land with a gap of 3 tiles between settlements, and connected to
+                other player owned structures.</p>
+              <div class="ref-entry">
+                <div class="ref-entry-name">Outpost</div>
+                <div class="ref-entry-desc">On number roll produce the most common resource under the settlement, with
+                  the quantity equal to the number of that tile under the settlement.</div>
+              </div>
+              <div class="ref-entry">
+                <div class="ref-entry-name">Farm</div>
+                <div class="ref-entry-desc">On number roll produce the most common, and second most common resource
+                  under the settlement, with the quantity equal to the number of those tiles under the settlement.</div>
+              </div>
+              <div class="ref-entry">
+                <div class="ref-entry-name">Trade Town</div>
+                <div class="ref-entry-desc">Trade towns must be built adjacent to water. The resource is determined by
+                  the most common resource under the trade town. The trade ratio is determined by the amount of the most
+                  common tile under the town. 1&ndash;4 of the tile = 3:1, 5&ndash;6 tiles = 2:1, all 7 tiles = 1:1.
+                </div>
+              </div>
+              <div class="ref-entry">
+                <div class="ref-entry-name">Factory</div>
+                <div class="ref-entry-desc">Factories must be placed on snow. Produces exactly 1 of the chosen resource
+                  each round.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ref-section">
+            <div class="ref-section-header">
+              <span class="cost-section-title">Strategy</span>
+              <span class="cost-section-toggle"></span>
+            </div>
+            <div class="ref-section-body">
+              <div class="ref-entry">
+                <div class="ref-entry-name">Walls</div>
+                <div class="ref-entry-desc">Walls can be placed on 60&deg; angles and prevent construction on top of
+                  them, effectively blocking areas. Cannot be used to connect structures.</div>
+              </div>
+              <div class="ref-entry">
+                <div class="ref-entry-name">Mercenary Camp</div>
+                <div class="ref-entry-desc">Mercenary camps must be placed on desert. Constructing a mercenary camp
+                  allows the player to steal half of one type of resource from any other player. This action happens
+                  once immediately after construction and cannot be repeated for the same mercenary camp. Cannot be
+                  placed within 3 tiles of other structures.</div>
+              </div>
+              <div class="ref-entry">
+                <div class="ref-entry-name">Castle</div>
+                <div class="ref-entry-desc">Castles prevent other players from building structures, roads, or claiming
+                  ruins inside a 6 tile radius. Structures or roads that existed prior to the castle&rsquo;s
+                  construction remain.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ref-section">
+            <div class="ref-section-header">
+              <span class="cost-section-title">Environment</span>
+              <span class="cost-section-toggle"></span>
+            </div>
+            <div class="ref-section-body">
+              <div class="ref-entry">
+                <div class="ref-entry-name">Ruins</div>
+                <div class="ref-entry-desc">Ruins are distributed randomly across the map. The number of ruins is
+                  determined by the map size and the number of players. Construction of other structures cannot be done
+                  within 4 tiles of an unclaimed ruin, with the exception of roads. Upon constructing a road adjacent to
+                  a ruin, the ruin is claimed by that player, granting resources and allowing that player only to
+                  construct structures near the ruin.</div>
+              </div>
+              <div class="ref-entry">
+                <div class="ref-entry-name">Bandit Camp</div>
+                <div class="ref-entry-desc">The bandit camp is located in the largest desert on the map, and surrounded
+                  by bandit tents equal to half the number of players rounded down. Structures cannot be placed within 3
+                  tiles of the bandit camp.</div>
+              </div>
+              <div class="ref-entry">
+                <div class="ref-entry-name">Bandit Tent</div>
+                <div class="ref-entry-desc">Bandit tents can be moved when the player rolls a 7. When placed next to a
+                  resource producing structure, bandit tents reduce its production by half. If placed next to a trade
+                  town, trades cost 2x more resources.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-left">
+        <div class="persistence-btns">
+          <button id="chooseMapBtn" class="btn btn-small btn-persistence" title="Choose a different map">Map</button>
+          <button id="saveBtn" class="btn btn-small btn-persistence" title="Save game to file">Save</button>
+          <button id="loadBtn" class="btn btn-small btn-persistence" title="Load game from file">Load</button>
+          <input id="loadFileInput" type="file" accept=".json" style="display: none;" />
+        </div>
+        <span id="status">Loading...</span>
+      </div>
+
+      <div class="footer-center">
+        <div class="search-wrap">
+          <input id="mapSearch" type="text" placeholder="Type to search..." spellcheck="false" autocomplete="off" />
+          <button id="mapSearchClear" class="search-clear-btn" title="Clear search">Clear</button>
+        </div>
+      </div>
+
+      <div class="footer-right">
+        <span id="fps">FPS: --</span>
+      </div>
+    </footer>
+
+    <!-- Autosave Recovery Modal -->
+    <div id="autosaveModal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">Resume Game?</div>
+          <div class="modal-subtitle">We found an autosave from your last session.</div>
+        </div>
+        <div class="modal-body">
+          Would you like to continue from where you left off, or start a new game?
+        </div>
+        <div class="modal-footer">
+          <button id="resumeBtn" class="btn btn-primary">Resume Session</button>
+          <button id="startFreshBtn" class="btn btn-muted">Start Fresh</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>

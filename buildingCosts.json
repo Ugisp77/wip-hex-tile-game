@@ -1,0 +1,106 @@
+[
+    {
+        "section": "Transportation",
+        "items": [
+            {
+                "name": "ROAD",
+                "costs": {
+                    "timber": 3,
+                    "clay": 2
+                }
+            },
+            {
+                "name": "SHIP",
+                "costs": {
+                    "timber": 6,
+                    "sheep": 2,
+                    "spices": 1
+                }
+            },
+            {
+                "name": "PORT",
+                "costs": {
+                    "timber": 4,
+                    "clay": 4,
+                    "ore": 2
+                }
+            }
+        ]
+    },
+    {
+        "section": "Production",
+        "items": [
+            {
+                "name": "OUTPOST",
+                "costs": {
+                    "timber": 4,
+                    "clay": 4,
+                    "grain": 3,
+                    "sheep": 3
+                }
+            },
+            {
+                "name": "FARM",
+                "costs": {
+                    "timber": 6,
+                    "grain": 6,
+                    "sheep": 4,
+                    "ore": 4,
+                    "furs": 2
+                }
+            },
+            {
+                "name": "TRADE TOWN",
+                "costs": {
+                    "ore": 10,
+                    "timber": 8,
+                    "sheep": 4,
+                    "spices": 1,
+                    "herbs": 1
+                }
+            },
+            {
+                "name": "FACTORY",
+                "costs": {
+                    "ore": 15,
+                    "timber": 10,
+                    "clay": 10,
+                    "grain": 1,
+                    "sheep": 1,
+                    "spices": 1,
+                    "herbs": 1,
+                    "furs": 1
+                }
+            }
+        ]
+    },
+    {
+        "section": "Strategy",
+        "items": [
+            {
+                "name": "WALL",
+                "costs": {
+                    "timber": 4
+                }
+            },
+            {
+                "name": "MERCENARY CAMP",
+                "costs": {
+                    "ore": 8,
+                    "sheep": 4,
+                    "grain": 3
+                }
+            },
+            {
+                "name": "CASTLE",
+                "costs": {
+                    "clay": 20,
+                    "ore": 15,
+                    "timber": 15,
+                    "grain": 5,
+                    "sheep": 5
+                }
+            }
+        ]
+    }
+]
