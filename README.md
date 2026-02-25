@@ -14,13 +14,13 @@ This is **not** a fully online game. It is designed to be played with a group of
 ---
 
 ## Features
-- 🗺️ **Full Game Map**: Detailed tiles for resources and roll values.
-- 🏗️ **Structures**: Build for production, travel, and defense.
-- ⏳ **Turn Management**: Player tracking with roll reminders and resource calculations.
-- 📖 **References**: Integrated building costs, bank trades, and structure guides.
-- 📍 **Minimap**: Quick navigation and overview.
-- 🔍 **Search**: Locate structures, resources, roll numbers, or players via the minimap search bar.
-- 🛠️ **Tooling**: Map creation, loading, and saving (including turn-based autosaves).
+- **Full Game Map**: Detailed tiles for resources and roll values.
+- **Structures**: Build for production, travel, and defense.
+- **Turn Management**: Player tracking with roll reminders and resource calculations.
+- **References**: Integrated building costs, bank trades, and structure guides.
+- **Minimap**: Quick navigation and overview.
+- **Search**: Locate structures, resources, roll numbers, or players via the minimap search bar.
+- **Tooling**: Map creation, loading, and saving (including turn-based autosaves).
 
 ---
 
