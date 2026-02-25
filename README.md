@@ -3,7 +3,7 @@
 > [!WARNING]
 > **WORK IN PROGRESS**: This project is currently not balanced, fully tested, or final.
 
-![Example Game Map](./Example.png)
+<img src="./Example.png" width="600" alt="Example Game Map">
 
 ## What this is
 A digital map for a hexagon tile-based 2-10 player resource management and exploration game, featuring several quality-of-life improvements to streamline gameplay.
@@ -59,3 +59,12 @@ This is **not** a fully online game. It is designed to be played with a group of
 ## Project Status
 - All rules, costs, and mechanics are subject to change based on playtesting feedback.
 - This project is strictly **non-commercial** for the time being.
+
+---
+
+## Credits
+<a href="https://www.retrodiffusion.ai/">
+  <img src="RetroDiffusionBanner.png" width="450" alt="RetroDiffusion Art">
+</a>
+
+All art assets used in this project were created using [RetroDiffusion](https://www.retrodiffusion.ai/).
